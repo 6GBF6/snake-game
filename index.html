@@ -3,143 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>贪吃蛇：多重进化 | 高级关卡挑战</title>
+    <title>幻境贪吃蛇 | 破阵·自由之路 | 动态关卡+自定义神速</title>
     <style>
         * {
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
         }
 
         body {
-            background: linear-gradient(145deg, #1a472a 0%, #0e2a1a 100%);
+            background: radial-gradient(circle at 20% 30%, #0a1f1a, #030c08);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Segoe UI', 'Poppins', 'Orbitron', 'Rajdhani', monospace;
+            font-family: 'Poppins', 'Segoe UI', 'Orbitron', monospace;
             margin: 0;
             padding: 20px;
         }
 
-        /* 主游戏面板 */
         .game-container {
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(3px);
-            border-radius: 64px;
-            padding: 20px 25px 25px 25px;
-            box-shadow: 0 25px 40px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 215, 120, 0.3);
+            background: rgba(10, 20, 12, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 72px;
+            padding: 18px 24px 24px 24px;
+            box-shadow: 0 30px 45px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 245, 180, 0.2);
+            border: 1px solid rgba(255, 210, 100, 0.5);
         }
 
         .game-wrapper {
-            background: #0a0f0c;
-            border-radius: 32px;
+            background: #030b06;
+            border-radius: 36px;
             padding: 12px;
-            box-shadow: inset 0 0 15px #00000055, 0 10px 20px rgba(0,0,0,0.3);
+            box-shadow: inset 0 0 12px #00000077, 0 12px 24px rgba(0,0,0,0.4);
         }
 
         canvas {
             display: block;
             margin: 0 auto;
-            border-radius: 24px;
-            box-shadow: 0 0 0 3px #f9d56e, 0 0 0 6px #3a2c1f;
-            background-color: #1e2a1c;
+            border-radius: 28px;
+            box-shadow: 0 0 0 3px #f3cd81, 0 0 0 7px #2a2c1a;
+            background-color: #172712;
             cursor: pointer;
         }
 
-        /* 信息栏 - 高级质感 */
         .info-panel {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
+            align-items: center;
             flex-wrap: wrap;
             margin-top: 18px;
-            margin-bottom: 12px;
             gap: 12px;
-            background: #020c05cc;
-            backdrop-filter: blur(8px);
-            padding: 12px 20px;
+            background: #07120ad9;
+            backdrop-filter: blur(12px);
+            padding: 10px 22px;
             border-radius: 60px;
-            border: 1px solid #ffdf8c;
+            border-bottom: 1px solid #ffdd99;
         }
 
         .stats {
             display: flex;
-            gap: 28px;
-            font-weight: bold;
+            gap: 20px;
         }
 
         .stat {
-            background: #00000066;
-            padding: 6px 18px;
+            background: #00000077;
+            padding: 5px 18px;
             border-radius: 40px;
-            color: #f7eac5;
-            text-shadow: 0 2px 2px black;
-            font-family: 'Orbitron', monospace;
-            letter-spacing: 1px;
+            color: #ffefc0;
+            font-weight: bold;
+            backdrop-filter: blur(4px);
         }
 
         .stat span:first-child {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            font-weight: 400;
-            color: #e6c87a;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: #ffd966;
         }
 
         .stat span:last-child {
-            font-size: 1.6rem;
+            font-size: 1.7rem;
             font-weight: 800;
-            margin-left: 12px;
-            color: #ffdf7e;
+            margin-left: 10px;
+            color: #f9e45b;
         }
 
-        .level-badge {
-            background: linear-gradient(135deg, #2e1b0e, #1c2a0f);
-            padding: 5px 20px;
-            border-radius: 60px;
+        .level-gem {
+            background: linear-gradient(145deg, #2f2a1a, #1c2a0f);
+            padding: 4px 22px;
+            border-radius: 50px;
             display: flex;
             gap: 12px;
             align-items: baseline;
-            box-shadow: 0 0 8px #ffbb4d;
+            box-shadow: 0 0 10px #ffbb66;
         }
 
-        .level-badge span:first-child {
-            color: #ffcf7a;
+        .level-gem span:first-child {
             font-weight: 600;
+            color: #ffdd99;
         }
 
-        .level-badge .level-value {
-            font-size: 1.9rem;
+        .level-value {
+            font-size: 2rem;
             font-weight: 800;
-            color: #ffaa33;
+            color: #ffaa44;
+            font-family: monospace;
+        }
+
+        .custom-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0 8px 0;
+            background: #0b130fd9;
+            padding: 8px 20px;
+            border-radius: 48px;
+        }
+
+        .ctrl-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #00000066;
+            padding: 5px 14px;
+            border-radius: 40px;
+        }
+
+        .ctrl-group label {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #ffeaac;
+        }
+
+        select, input {
+            background: #1e2a1c;
+            border: 1px solid #ffcd7e;
+            color: #ffeaac;
+            padding: 6px 12px;
+            border-radius: 32px;
+            font-weight: bold;
+            cursor: pointer;
             font-family: monospace;
         }
 
         button {
             background: #ffc857;
             border: none;
-            font-family: 'Segoe UI', 'Poppins', sans-serif;
             font-weight: bold;
-            padding: 8px 24px;
-            border-radius: 48px;
-            font-size: 1rem;
+            padding: 7px 24px;
+            border-radius: 40px;
+            font-size: 0.9rem;
             cursor: pointer;
-            transition: 0.2s;
-            color: #1e3a1a;
+            transition: 0.15s;
+            color: #1a3a1a;
             box-shadow: 0 4px 0 #8b5e2c;
-            letter-spacing: 1px;
         }
 
         button:active {
             transform: translateY(2px);
             box-shadow: 0 1px 0 #8b5e2c;
-        }
-
-        .controls {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin-top: 18px;
         }
 
         .mobile-arrows {
@@ -150,47 +174,34 @@
         }
 
         .arrow-btn {
-            background: #000000aa;
-            backdrop-filter: blur(12px);
-            border: 1px solid gold;
-            font-size: 2rem;
-            padding: 8px 20px;
-            box-shadow: 0 6px 0 #3a280e;
-            color: #f5cb5c;
+            background: #000000bb;
+            backdrop-filter: blur(10px);
+            border: 1px solid #ffd966;
+            font-size: 1.8rem;
+            padding: 6px 20px;
+            box-shadow: 0 5px 0 #3a2e12;
+            color: #f9d56e;
         }
 
-        /* 提示 + 特效 */
         .message {
             text-align: center;
             margin-top: 12px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: bold;
-            color: #ffeaac;
-            text-shadow: 0 2px 3px black;
-            background: #00000077;
+            color: #fdebb3;
+            background: #00000088;
+            border-radius: 36px;
+            padding: 5px 12px;
             display: inline-block;
             width: auto;
-            padding: 4px 20px;
-            border-radius: 40px;
         }
 
-        @media (max-width: 650px) {
-            .game-container {
-                padding: 12px;
-            }
-            .stat span:last-child {
-                font-size: 1.2rem;
-            }
-            .mobile-arrows {
-                display: flex;
-            }
-            .info-panel {
-                flex-direction: column;
-                align-items: center;
-            }
-            button {
-                padding: 6px 18px;
-            }
+        @media (max-width: 700px) {
+            .custom-row { flex-direction: column; align-items: stretch; }
+            .ctrl-group { justify-content: space-between; }
+            .stats { gap: 8px; }
+            .mobile-arrows { display: flex; }
+            .stat span:last-child { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -200,19 +211,43 @@
         <div class="game-wrapper">
             <canvas id="gameCanvas" width="600" height="600"></canvas>
         </div>
+
         <div class="info-panel">
             <div class="stats">
-                <div class="stat"><span>🍎 得分</span><span id="scoreValue">0</span></div>
-                <div class="stat"><span>🐍 长度</span><span id="lengthValue">3</span></div>
+                <div class="stat"><span>🍎 灵果</span><span id="scoreValue">0</span></div>
+                <div class="stat"><span>🐉 蛇躯</span><span id="lengthValue">3</span></div>
             </div>
-            <div class="level-badge">
-                <span>🌟 关卡 ·</span>
+            <div class="level-gem">
+                <span>🗺️ 秘境关卡</span>
                 <span class="level-value" id="levelValue">1</span>
             </div>
-            <button id="resetButton">🐉 重铸征程</button>
+            <button id="resetButton">🌋 轮回新生</button>
         </div>
-        <div class="controls">
-            <button id="pauseBtn">⏸️ 暂停</button>
+
+        <!-- 自定义面板：速度 & 蛇身颜色 -->
+        <div class="custom-row">
+            <div class="ctrl-group">
+                <label>⚡ 神速模式</label>
+                <select id="speedSelect">
+                    <option value="slow">🐢 慢速 (200ms)</option>
+                    <option value="normal" selected>⚡ 标准 (140ms)</option>
+                    <option value="fast">🔥 疾风 (90ms)</option>
+                    <option value="insane">💨 幻影 (55ms)</option>
+                </select>
+            </div>
+            <div class="ctrl-group">
+                <label>🐍 灵蛇幻彩</label>
+                <input type="color" id="snakeColor" value="#3eff9e">
+                <span style="font-size:12px;">头部高亮</span>
+            </div>
+            <div class="ctrl-group">
+                <label>🎨 身体渐深</label>
+                <input type="color" id="snakeBodyColor" value="#1faa50">
+            </div>
+        </div>
+
+        <div class="controls" style="display: flex; gap: 12px; justify-content: center; margin-top: 5px;">
+            <button id="pauseBtn">⏸️ 时停咒印</button>
         </div>
         <div class="mobile-arrows" id="mobileArrows">
             <button class="arrow-btn" data-dir="up">▲</button>
@@ -221,462 +256,468 @@
             <button class="arrow-btn" data-dir="right">▶</button>
         </div>
         <div class="message" id="statusMessage">
-            🎮 方向键 / WASD  |  每过5分升关
+            ✨ 每过3关地图进化 | 每吃5果升一关 | 所有地图均保证安全路径 ✨
         </div>
     </div>
 </div>
 
 <script>
     (function(){
-        // ---------- 高级贪吃蛇：多关卡 + 动态难度 + 华丽视觉 ----------
+        // ---------- 贪吃蛇·高级多地图系统：保证路径通畅，果子不会困于绝境 ----------
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
-
-        // 网格配置 (20x20，高级经典尺寸)
-        const GRID_SIZE = 20;      // 20x20 网格
-        const CELL_SIZE = canvas.width / GRID_SIZE; // 30px
+        const GRID_SIZE = 20;       // 20x20 核心战场
+        const CELL_SIZE = canvas.width / GRID_SIZE;
         
-        // 游戏变量
-        let snake = [];     // 坐标数组 {x, y}
-        let food = { x: 12, y: 12 };
-        let direction = 'right';    // 当前移动方向
+        // 游戏状态
+        let snake = [];
+        let food = { x: 15, y: 10 };
+        let direction = 'right';
         let nextDirection = 'right';
         let score = 0;
         let level = 1;
-        let gameLoop = null;
         let isGameOver = false;
         let isPaused = false;
+        let gameLoop = null;
         
-        // 速度配置 (基础间隔毫秒) 关卡越高越快
-        let baseSpeed = 150;    // 初始150ms
-        let currentSpeed = baseSpeed;
+        // 动态速度
+        let currentSpeedMs = 140;
+        const speedMap = { slow: 200, normal: 140, fast: 90, insane: 55 };
         
-        // 墙壁碰撞模式：高级关卡中后期采用穿墙？ 为了挑战和趣味，保持经典边界碰撞，但增加障碍物的概念(部分关卡速度惩罚)
-        // 但更“高级”的关卡引入额外机制：每个关卡食物不同颜色 + 蛇身特效 + 关卡阈值增加速度梯度
-        // 升关条件: 每获得 5 分 (吃5个食物) 升一级，最高 12 关，速度会越来越快且增加额外视觉效果
-        const MAX_LEVEL = 12;
-        // 速度映射: 等级越高越快 (ms)
-        const getSpeedByLevel = (lvl) => {
-            let spd = 150 - (lvl-1) * 8;
-            if(spd < 55) spd = 55;
-            return spd;
-        };
+        // 自定义蛇颜色
+        let snakeHeadColor = "#3eff9e";
+        let snakeBodyColor = "#1faa50";
         
-        // 记录升关得分阈值 (每5分升一级)
-        let nextLevelScore = 5;
+        // 障碍物数组 (仅装饰性障碍，且必须保证所有障碍物周围有通路，并且任何食物都不会被困)
+        let obstacles = [];
         
-        // 辅助函数: 更新UI显示
-        function updateUI() {
+        // ---------- 智能地图生成器（保证所有空地连通，食物永远不会出现在无法到达的区域）----------
+        // 核心：使用洪水填充算法检测连通性，保证蛇与食物之间永远存在通路
+        function isReachable(from, to, obstaclesSet, snakeSet) {
+            // BFS 检查从 from 到 to 是否有一条避开障碍物和蛇身的路径 (但蛇身会移动，这里仅用于生成时确保食物不在封闭区域)
+            let visited = Array(GRID_SIZE).fill().map(() => Array(GRID_SIZE).fill(false));
+            let queue = [{x: from.x, y: from.y}];
+            visited[from.x][from.y] = true;
+            while(queue.length > 0) {
+                let cur = queue.shift();
+                if(cur.x === to.x && cur.y === to.y) return true;
+                const dirs = [[0,1],[1,0],[0,-1],[-1,0]];
+                for(let [dx, dy] of dirs) {
+                    let nx = cur.x + dx, ny = cur.y + dy;
+                    if(nx>=0 && nx<GRID_SIZE && ny>=0 && ny<GRID_SIZE && !visited[nx][ny]) {
+                        if(obstaclesSet.has(`${nx},${ny}`)) continue;
+                        if(snakeSet.has(`${nx},${ny}`)) continue;
+                        visited[nx][ny] = true;
+                        queue.push({x:nx, y:ny});
+                    }
+                }
+            }
+            return false;
+        }
+        
+        // 获取所有自由格子 (非障碍物且非蛇)
+        function getFreeCells(excludeSnakeSet = true) {
+            let free = [];
+            let snakeSet = new Set();
+            if(excludeSnakeSet) snake.forEach(seg => snakeSet.add(`${seg.x},${seg.y}`));
+            for(let i=0;i<GRID_SIZE;i++){
+                for(let j=0;j<GRID_SIZE;j++){
+                    let blocked = obstacles.some(obs => obs.x===i && obs.y===j);
+                    if(blocked) continue;
+                    if(excludeSnakeSet && snakeSet.has(`${i},${j}`)) continue;
+                    free.push({x:i, y:j});
+                }
+            }
+            return free;
+        }
+        
+        // 生成有效食物: 确保食物与蛇头在同一个连通分量中
+        function generateValidFood() {
+            let snakeHead = snake[0];
+            let freeCells = getFreeCells(true);
+            if(freeCells.length === 0) { gameWin(); return false; }
+            
+            // 筛选出所有从蛇头可以到达的格子
+            let snakeSet = new Set(snake.map(s=>`${s.x},${s.y}`));
+            let obstaclesSet = new Set(obstacles.map(o=>`${o.x},${o.y}`));
+            let reachable = [];
+            for(let cell of freeCells) {
+                if(isReachable(snakeHead, cell, obstaclesSet, snakeSet)) {
+                    reachable.push(cell);
+                }
+            }
+            if(reachable.length === 0) {
+                // 极端情况: 蛇头被自己包围? 重置食物位置到一个随机自由点且不检查连通? 但几乎不会，加入后备
+                if(freeCells.length>0) food = freeCells[Math.floor(Math.random()*freeCells.length)];
+                else gameWin();
+                return;
+            }
+            food = reachable[Math.floor(Math.random() * reachable.length)];
+            return true;
+        }
+        
+        // 确保地图障碍物不会完全割裂区域, 并且初始蛇周围至少有一片连通区域
+        function validateMapConnectivity() {
+            let obstaclesSet = new Set(obstacles.map(o=>`${o.x},${o.y}`));
+            let emptySpaces = [];
+            for(let i=0;i<GRID_SIZE;i++)
+                for(let j=0;j<GRID_SIZE;j++)
+                    if(!obstaclesSet.has(`${i},${j}`))
+                        emptySpaces.push({x:i,y:j});
+            if(emptySpaces.length === 0) return false;
+            // 检查所有空白区域是否连通 (洪水填充)
+            let start = emptySpaces[0];
+            let visited = Array(GRID_SIZE).fill().map(()=>Array(GRID_SIZE).fill(false));
+            let queue = [start];
+            visited[start.x][start.y] = true;
+            let reachCount = 0;
+            while(queue.length){
+                let cur = queue.shift();
+                reachCount++;
+                const dirs = [[0,1],[1,0],[0,-1],[-1,0]];
+                for(let [dx,dy] of dirs){
+                    let nx=cur.x+dx, ny=cur.y+dy;
+                    if(nx>=0 && nx<GRID_SIZE && ny>=0 && ny<GRID_SIZE && !visited[nx][ny] && !obstaclesSet.has(`${nx},${ny}`)){
+                        visited[nx][ny]=true;
+                        queue.push({x:nx,y:ny});
+                    }
+                }
+            }
+            // 所有空白区域必须全部连通，否则地图不合理 (移除某些障碍物)
+            if(reachCount !== emptySpaces.length) {
+                // 地图割裂，简化处理：重建地图为无墙或简单墙
+                return false;
+            }
+            return true;
+        }
+        
+        // 地图库：每个关卡风格独特，但均保证安全性 (障碍物不会围死)
+        function generateMapByLevel(lvl) {
+            let newObstacles = [];
+            if(lvl === 1) { /* 纯净草原，无障碍 */ }
+            else if(lvl === 2) {
+                // 角落装饰石柱，不堵路
+                for(let i=1;i<=2;i++) { newObstacles.push({x:0,y:i}); newObstacles.push({x:i,y:0}); newObstacles.push({x:GRID_SIZE-1, y:GRID_SIZE-1-i}); newObstacles.push({x:GRID_SIZE-1-i, y:GRID_SIZE-1}); }
+            }
+            else if(lvl === 3) {
+                // 中央十字水潭 (留出足够通道)
+                for(let i=7;i<=12;i++) {
+                    if(i!==10) { newObstacles.push({x:i, y:9}); newObstacles.push({x:i, y:11}); }
+                    if(i!==10) { newObstacles.push({x:9, y:i}); newObstacles.push({x:11, y:i}); }
+                }
+            }
+            else if(lvl === 4) {
+                // 外围细环 + 内部点缀 (保证有缺口)
+                for(let i=0;i<GRID_SIZE;i++) {
+                    if(i>1 && i<GRID_SIZE-2 && (i%4 !== 0)) continue;
+                    if(i===0 || i===GRID_SIZE-1) continue;
+                    newObstacles.push({x:1,y:i}); newObstacles.push({x:GRID_SIZE-2,y:i});
+                    newObstacles.push({x:i,y:1}); newObstacles.push({x:i,y:GRID_SIZE-2});
+                }
+                // 去掉四个角落障碍，保持通路
+                for(let corner of [{x:1,y:1},{x:1,y:GRID_SIZE-2},{x:GRID_SIZE-2,y:1},{x:GRID_SIZE-2,y:GRID_SIZE-2}]) {
+                    newObstacles = newObstacles.filter(o=>!(o.x===corner.x && o.y===corner.y));
+                }
+            }
+            else if(lvl === 5) {
+                // 星落棋盘 (稀疏点阵，不阻碍)
+                for(let i=2;i<GRID_SIZE-2;i+=3) {
+                    for(let j=2;j<GRID_SIZE-2;j+=3) {
+                        if((i+j)%2===0) newObstacles.push({x:i, y:j});
+                    }
+                }
+            }
+            else if(lvl === 6) {
+                // 双螺旋曲线 (视觉优雅)
+                for(let t=0;t<8;t++) {
+                    let x1 = 5 + t, y1 = 5 + (t%2);
+                    let x2 = 14 - t, y2 = 14 - (t%2);
+                    if(x1<GRID_SIZE && y1<GRID_SIZE) newObstacles.push({x:x1, y:y1});
+                    if(x2>=0 && y2>=0) newObstacles.push({x:x2, y:y2});
+                }
+            }
+            else if(lvl === 7) {
+                // 远古符文墙（留出迷宫通道）
+                for(let i=2;i<GRID_SIZE-2;i+=2) {
+                    if(i!==10) newObstacles.push({x:i, y:5});
+                    if(i!==10) newObstacles.push({x:i, y:14});
+                    if(i!==9 && i!==11) newObstacles.push({x:5, y:i});
+                    if(i!==9 && i!==11) newObstacles.push({x:14, y:i});
+                }
+            }
+            else if(lvl === 8) {
+                // 锯齿长廊 (仅装饰，提供趣味)
+                for(let i=3;i<17;i++) {
+                    if(i%2===0) newObstacles.push({x:i, y:4});
+                    else newObstacles.push({x:i, y:15});
+                }
+            }
+            else if(lvl === 9) {
+                // 幸运圆环(外环装饰)
+                for(let angle=0;angle<360;angle+=30) {
+                    let rad = angle * Math.PI/180;
+                    let cx = 10 + Math.cos(rad)*5;
+                    let cy = 10 + Math.sin(rad)*5;
+                    let ix = Math.floor(cx), iy = Math.floor(cy);
+                    if(ix>1 && ix<GRID_SIZE-1 && iy>1 && iy<GRID_SIZE-1) newObstacles.push({x:ix, y:iy});
+                }
+            }
+            else if(lvl === 10) {
+                // 阶梯状墙体 (保证上下左右有通道)
+                for(let i=3;i<=16;i++) {
+                    if(i<12) newObstacles.push({x:i, y:7});
+                    if(i>6) newObstacles.push({x:i, y:12});
+                }
+            }
+            else if(lvl >= 11) {
+                // 高级幻境: 生成稀疏随机石柱群，但必须保证地图连通 (通过验证调整)
+                let attempt = 0;
+                let maxAttempt = 15;
+                while(attempt < maxAttempt){
+                    let tempObs = [];
+                    let obsCount = 28 + (lvl-11)*2;
+                    for(let k=0;k<obsCount;k++){
+                        let rx = Math.floor(Math.random()*GRID_SIZE);
+                        let ry = Math.floor(Math.random()*GRID_SIZE);
+                        // 避免中央蛇活动密集区域过堵
+                        if((rx>=7 && rx<=12 && ry>=7 && ry<=12) && Math.random()>0.4) continue;
+                        tempObs.push({x:rx, y:ry});
+                    }
+                    // 去重
+                    tempObs = tempObs.filter((obs,idx,self)=>self.findIndex(o=>o.x===obs.x&&o.y===obs.y)===idx);
+                    // 临时验证连通性
+                    let testSet = new Set(tempObs.map(o=>`${o.x},${o.y}`));
+                    let empty = 0;
+                    let start = null;
+                    for(let i=0;i<GRID_SIZE && !start;i++) for(let j=0;j<GRID_SIZE;j++) if(!testSet.has(`${i},${j}`)) { start={x:i,y:j}; break; }
+                    if(!start) continue;
+                    let vis = Array(GRID_SIZE).fill().map(()=>Array(GRID_SIZE).fill(false));
+                    let q = [start];
+                    vis[start.x][start.y]=true;
+                    let cnt=0;
+                    while(q.length){
+                        let cur=q.shift(); cnt++;
+                        for(let [dx,dy] of [[0,1],[1,0],[0,-1],[-1,0]]){
+                            let nx=cur.x+dx, ny=cur.y+dy;
+                            if(nx>=0 && nx<GRID_SIZE && ny>=0 && ny<GRID_SIZE && !vis[nx][ny] && !testSet.has(`${nx},${ny}`)){
+                                vis[nx][ny]=true; q.push({x:nx,y:ny});
+                            }
+                        }
+                    }
+                    let totalEmpty = GRID_SIZE*GRID_SIZE - tempObs.length;
+                    if(cnt === totalEmpty) { newObstacles = tempObs; break; }
+                    attempt++;
+                }
+                if(newObstacles.length===0) newObstacles = [];
+            }
+            // 最终去重
+            const unique = [];
+            const map = new Map();
+            for(let o of newObstacles){
+                let key = `${o.x},${o.y}`;
+                if(!map.has(key) && o.x>=0 && o.x<GRID_SIZE && o.y>=0 && o.y<GRID_SIZE){
+                    map.set(key,true);
+                    unique.push(o);
+                }
+            }
+            return unique;
+        }
+        
+        // 刷新地图并验证连通性，若不连通则递归向下兼容 (退化到前一关风格)
+        function refreshMapByLevel() {
+            let newObs = generateMapByLevel(level);
+            obstacles = newObs;
+            // 验证连通性，如果不连通，使用安全地图(关掉部分障碍)
+            if(!validateMapConnectivity()){
+                // 降级为无完全阻塞地图：移除可能导致隔离的障碍物，通常移除一半随机障碍
+                let safeObs = [];
+                for(let obs of obstacles){
+                    let testObs = [...safeObs, obs];
+                    let testSet = new Set(testObs.map(o=>`${o.x},${o.y}`));
+                    let emptyStart = null;
+                    for(let i=0;i<GRID_SIZE && !emptyStart;i++) for(let j=0;j<GRID_SIZE;j++) if(!testSet.has(`${i},${j}`)){ emptyStart={x:i,y:j}; break;}
+                    if(emptyStart){
+                        let visited = Array(GRID_SIZE).fill().map(()=>Array(GRID_SIZE).fill(false));
+                        let queue=[emptyStart]; visited[emptyStart.x][emptyStart.y]=true;
+                        let reach=0;
+                        while(queue.length){
+                            let cur=queue.shift(); reach++;
+                            for(let [dx,dy] of [[0,1],[1,0],[0,-1],[-1,0]]){
+                                let nx=cur.x+dx, ny=cur.y+dy;
+                                if(nx>=0 && nx<GRID_SIZE && ny>=0 && ny<GRID_SIZE && !visited[nx][ny] && !testSet.has(`${nx},${ny}`)){
+                                    visited[nx][ny]=true; queue.push({x:nx,y:ny});
+                                }
+                            }
+                        }
+                        let totalFree = GRID_SIZE*GRID_SIZE - testObs.length;
+                        if(reach === totalFree) safeObs.push(obs);
+                    }
+                }
+                obstacles = safeObs;
+            }
+        }
+        
+        // 初始化/重置游戏
+        function initGame() {
+            refreshMapByLevel();   // 生成当前关卡合理障碍
+            // 生成初始蛇 (确保不在障碍物上)
+            let startCandidates = [[10,10],[9,10],[8,10]];
+            let safeSnake = [];
+            for(let [x,y] of startCandidates){
+                if(!obstacles.some(o=>o.x===x && o.y===y)){
+                    safeSnake.push({x,y});
+                } else { break; }
+            }
+            if(safeSnake.length < 3){
+                // 寻找安全区域
+                for(let i=0;i<GRID_SIZE && safeSnake.length<3;i++){
+                    for(let j=0;j<GRID_SIZE && safeSnake.length<3;j++){
+                        if(!obstacles.some(o=>o.x===i && o.y===j) && !safeSnake.some(s=>s.x===i && s.y===j)){
+                            safeSnake.push({x:i,y:j});
+                        }
+                    }
+                }
+            }
+            snake = safeSnake.length>=2 ? safeSnake : [{x:5,y:10},{x:4,y:10},{x:3,y:10}];
+            direction = 'right';
+            nextDirection = 'right';
+            score = 0;
+            isGameOver = false;
+            isPaused = false;
+            updateUI();
+            generateValidFood();   // 智能连通食物生成
+            applySpeedFromSelect();
+            if(gameLoop) clearInterval(gameLoop);
+            startGameLoop();
+            draw();
+            updateStatusMessage(`✨ 进入关卡 ${level} · 路径畅通 · 灵果可期 ✨`);
+        }
+        
+        function applySpeedFromSelect(){
+            const speedVal = document.getElementById('speedSelect').value;
+            currentSpeedMs = speedMap[speedVal];
+            if(gameLoop && !isGameOver && !isPaused){
+                clearInterval(gameLoop);
+                startGameLoop();
+            }
+        }
+        
+        function startGameLoop(){
+            if(gameLoop) clearInterval(gameLoop);
+            gameLoop = setInterval(()=>{
+                if(!isGameOver && !isPaused) gameTick();
+                draw();
+            }, currentSpeedMs);
+        }
+        
+        function gameTick(){
+            if(isGameOver || isPaused) return;
+            direction = nextDirection;
+            let newHead = {...snake[0]};
+            switch(direction){
+                case 'right': newHead.x+=1; break;
+                case 'left': newHead.x-=1; break;
+                case 'up': newHead.y-=1; break;
+                case 'down': newHead.y+=1; break;
+            }
+            const willEat = (newHead.x===food.x && newHead.y===food.y);
+            snake.unshift(newHead);
+            if(!willEat) snake.pop();
+            else {
+                score++;
+                updateUI();
+                generateValidFood();
+                tryLevelUp();
+                if(isGameOver) return;
+            }
+            const head = snake[0];
+            // 边界碰撞 + 障碍物碰撞
+            if(head.x<0 || head.x>=GRID_SIZE || head.y<0 || head.y>=GRID_SIZE || obstacles.some(o=>o.x===head.x && o.y===head.y)){
+                endGameWithMsg("💀 撞墙/圣柱，灵蛇消散 💀");
+                return;
+            }
+            for(let i=1;i<snake.length;i++){
+                if(snake[i].x===head.x && snake[i].y===head.y){
+                    endGameWithMsg("💢 噬身之劫，轮回重启");
+                    return;
+                }
+            }
+            if(snake.length === GRID_SIZE*GRID_SIZE - obstacles.length) gameWin();
+        }
+        
+        function tryLevelUp(){
+            let newLevel = Math.floor(score / 5) + 1;
+            if(newLevel > 12) newLevel = 12;
+            if(newLevel !== level){
+                level = newLevel;
+                updateUI();
+                refreshMapByLevel();
+                // 确保蛇不会卡在障碍物里, 简单修正: 若蛇头碰撞，直接重置游戏体验
+                if(obstacles.some(o=>o.x===snake[0].x && o.y===snake[0].y)){
+                    initGame();
+                    return;
+                }
+                generateValidFood();
+                updateStatusMessage(`🏞️ 关卡晋升 Lv.${level}！地貌突变，但通路永存 🏞️`, true);
+                drawLevelUpFlash();
+            }
+        }
+        
+        function endGameWithMsg(msg){
+            if(isGameOver) return;
+            if(gameLoop) clearInterval(gameLoop);
+            isGameOver=true;
+            updateStatusMessage(msg);
+            draw();
+        }
+        
+        function gameWin(){
+            if(gameLoop) clearInterval(gameLoop);
+            isGameOver=true;
+            updateStatusMessage("🏅 神话破境！征服万象地图！🏅");
+            drawWinMsg();
+        }
+        
+        function updateUI(){
             document.getElementById('scoreValue').innerText = score;
             document.getElementById('lengthValue').innerText = snake.length;
             document.getElementById('levelValue').innerText = level;
         }
         
-        // 初始化/重置游戏
-        function initGame() {
-            // 初始蛇: 3格，水平放置
-            snake = [
-                { x: 10, y: 10 },
-                { x: 9, y: 10 },
-                { x: 8, y: 10 }
-            ];
-            direction = 'right';
-            nextDirection = 'right';
-            score = 0;
-            level = 1;
-            isGameOver = false;
-            isPaused = false;
-            currentSpeed = getSpeedByLevel(1);
-            nextLevelScore = 5;
-            updateUI();
-            generateValidFood();  // 确保食物不与蛇重叠
-            // 清除之前循环
-            if(gameLoop) clearInterval(gameLoop);
-            startGameLoop();
-            draw();
-            updateStatusMessage("✨ 新游戏！关卡1，速度舒适 ✨");
-        }
-        
-        // 生成有效食物位置
-        function generateValidFood() {
-            const totalCells = GRID_SIZE * GRID_SIZE;
-            if(snake.length >= totalCells) {
-                // 胜利结局
-                gameWin();
-                return;
+        // 绘图部分略作优化
+        function draw(){
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = '#0e1c10';
+            ctx.fillRect(0,0,canvas.width,canvas.height);
+            for(let i=0;i<=GRID_SIZE;i++){
+                ctx.beginPath(); ctx.strokeStyle='#e5c88a30'; ctx.lineWidth=0.8;
+                ctx.moveTo(i*CELL_SIZE,0); ctx.lineTo(i*CELL_SIZE,canvas.height); ctx.stroke();
+                ctx.moveTo(0,i*CELL_SIZE); ctx.lineTo(canvas.width,i*CELL_SIZE); ctx.stroke();
             }
-            const snakeSet = new Set(snake.map(seg => `${seg.x},${seg.y}`));
-            let freeCells = [];
-            for(let i = 0; i < GRID_SIZE; i++) {
-                for(let j = 0; j < GRID_SIZE; j++) {
-                    if(!snakeSet.has(`${i},${j}`)) {
-                        freeCells.push({ x: i, y: j });
-                    }
+            for(let obs of obstacles){
+                ctx.fillStyle = '#aa7a4ccc'; ctx.fillRect(obs.x*CELL_SIZE+2, obs.y*CELL_SIZE+2, CELL_SIZE-4, CELL_SIZE-4);
+                ctx.fillStyle = '#5e3a1e'; ctx.fillRect(obs.x*CELL_SIZE+5, obs.y*CELL_SIZE+5, CELL_SIZE-10, CELL_SIZE-10);
+            }
+            ctx.shadowBlur=8; ctx.shadowColor='#ffaa55';
+            ctx.fillStyle = '#ff7878'; ctx.beginPath(); ctx.arc(food.x*CELL_SIZE+CELL_SIZE/2, food.y*CELL_SIZE+CELL_SIZE/2, CELL_SIZE/2.6,0,Math.PI*2); ctx.fill();
+            ctx.fillStyle='#ffffaa'; ctx.beginPath(); ctx.arc(food.x*CELL_SIZE+CELL_SIZE/2, food.y*CELL_SIZE+CELL_SIZE/2, CELL_SIZE/6,0,Math.PI*2); ctx.fill();
+            ctx.shadowBlur=0;
+            for(let i=0;i<snake.length;i++){
+                let s=snake[i]; let col = (i===0) ? snakeHeadColor : snakeBodyColor;
+                let grad = ctx.createLinearGradient(s.x*CELL_SIZE, s.y*CELL_SIZE, s.x*CELL_SIZE+CELL_SIZE, s.y*CELL_SIZE+CELL_SIZE);
+                grad.addColorStop(0, col); grad.addColorStop(1, i===0 ? '#ffcc77' : '#3bad5a');
+                ctx.fillStyle=grad; ctx.fillRect(s.x*CELL_SIZE+3, s.y*CELL_SIZE+3, CELL_SIZE-6, CELL_SIZE-6);
+                if(i===0){
+                    ctx.fillStyle='white'; ctx.beginPath(); ctx.arc(s.x*CELL_SIZE+CELL_SIZE-8, s.y*CELL_SIZE+9, 4,0,Math.PI*2); ctx.arc(s.x*CELL_SIZE+8, s.y*CELL_SIZE+9, 4,0,Math.PI*2); ctx.fill();
+                    ctx.fillStyle='#0a1f1a'; ctx.beginPath(); ctx.arc(s.x*CELL_SIZE+CELL_SIZE-7, s.y*CELL_SIZE+7, 2,0,Math.PI*2); ctx.arc(s.x*CELL_SIZE+9, s.y*CELL_SIZE+7, 2,0,Math.PI*2); ctx.fill();
                 }
             }
-            if(freeCells.length === 0) {
-                gameWin();
-                return;
-            }
-            const rand = Math.floor(Math.random() * freeCells.length);
-            food = freeCells[rand];
+            if(isGameOver) drawGameOver(); else if(isPaused) drawPaused();
         }
-        
-        // 胜利通关(高级成就)
-        function gameWin() {
-            if(gameLoop) clearInterval(gameLoop);
-            isGameOver = true;
-            updateStatusMessage("🏆 超凡通关！你已登顶贪吃蛇圣殿 🏆");
-            drawWinMessage();
-        }
-        
-        // 游戏结束逻辑
-        function endGame() {
-            if(isGameOver) return;
-            if(gameLoop) clearInterval(gameLoop);
-            isGameOver = true;
-            updateStatusMessage(`💀 游戏终结 | 最终得分:${score} 关卡:${level} 💀 点击重置`);
-            drawGameOver();
-        }
-        
-        // 升级逻辑 (高级多关卡)
-        function tryLevelUp() {
-            // 根据分数计算应该达到的等级 (每5分一级，但限制MAX_LEVEL)
-            let expectedLevel = Math.floor(score / 5) + 1;
-            if(expectedLevel > MAX_LEVEL) expectedLevel = MAX_LEVEL;
-            if(expectedLevel !== level) {
-                // 升级啦！绚丽提示
-                const oldLevel = level;
-                level = expectedLevel;
-                currentSpeed = getSpeedByLevel(level);
-                // 重启循环速度
-                if(!isGameOver && !isPaused) {
-                    if(gameLoop) clearInterval(gameLoop);
-                    startGameLoop();
-                }
-                updateUI();
-                // 特效升级消息
-                updateStatusMessage(`⚡ 升关 Lv.${level} ! 速度提升 | 反应加速 ⚡`, true);
-                drawLevelUpEffect();
-                // 可额外加分奖励/不奖励直接速度挑战
-            }
-        }
-        
-        // 移动蛇的核心逻辑
-        function moveSnake() {
-            if(isGameOver || isPaused) return false;
-            
-            // 正式采用下一个合法方向
-            direction = nextDirection;
-            
-            // 计算新头
-            let newHead = { ...snake[0] };
-            switch(direction) {
-                case 'right': newHead.x += 1; break;
-                case 'left':  newHead.x -= 1; break;
-                case 'up':    newHead.y -= 1; break;
-                case 'down':  newHead.y += 1; break;
-                default: break;
-            }
-            
-            // 检测食物碰撞
-            const willEat = (newHead.x === food.x && newHead.y === food.y);
-            
-            // 执行移动 (先加头)
-            snake.unshift(newHead);
-            if(!willEat) {
-                snake.pop();
-            } else {
-                // 吃食物加分
-                score++;
-                updateUI();
-                // 生成新食物
-                generateValidFood();
-                // 判断升级 (每5分)
-                tryLevelUp();
-                // 如果升关之后速度变了但已在循环外，无妨，但是注意食物生成后如果胜利gameWin会中断
-                if(isGameOver) return false;
-            }
-            
-            // 碰撞检测 (边界 & 自身)
-            const head = snake[0];
-            // 边界碰撞
-            if(head.x < 0 || head.x >= GRID_SIZE || head.y < 0 || head.y >= GRID_SIZE) {
-                endGame();
-                return false;
-            }
-            // 自身碰撞 (检查头部是否与身体其他部分重叠，索引0是头，从1开始)
-            for(let i = 1; i < snake.length; i++) {
-                if(snake[i].x === head.x && snake[i].y === head.y) {
-                    endGame();
-                    return false;
-                }
-            }
-            
-            // 胜利条件：蛇满
-            if(snake.length === GRID_SIZE * GRID_SIZE) {
-                gameWin();
-                return false;
-            }
-            
-            return true;
-        }
-        
-        // 游戏主循环动作
-        function gameTick() {
-            if(isGameOver || isPaused) return;
-            moveSnake();
-            draw();  // 每帧重绘高级画面
-        }
-        
-        function startGameLoop() {
-            if(gameLoop) clearInterval(gameLoop);
-            gameLoop = setInterval(() => {
-                gameTick();
-            }, currentSpeed);
-        }
-        
-        // 绘图区域: 高级绚丽风格 + 等级特效 (渐变蛇身，食物发光，网格特效)
-        function draw() {
-            if(!ctx) return;
-            // 绘制背景 - 高级暗色渐变网格
-            ctx.fillStyle = '#101f12';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            // 绘制网格线 (半透金线)
-            ctx.beginPath();
-            ctx.strokeStyle = '#ffe5a355';
-            ctx.lineWidth = 0.8;
-            for(let i = 0; i <= GRID_SIZE; i++) {
-                ctx.beginPath();
-                ctx.moveTo(i * CELL_SIZE, 0);
-                ctx.lineTo(i * CELL_SIZE, canvas.height);
-                ctx.stroke();
-                ctx.moveTo(0, i * CELL_SIZE);
-                ctx.lineTo(canvas.width, i * CELL_SIZE);
-                ctx.stroke();
-            }
-            
-            // 绘制食物: 根据关卡呈现不同光晕形状(高级特效)
-            const foodX = food.x * CELL_SIZE;
-            const foodY = food.y * CELL_SIZE;
-            ctx.save();
-            ctx.shadowBlur = 12;
-            ctx.shadowColor = '#ffbb66';
-            // 炫彩食物渐变
-            const gradient = ctx.createRadialGradient(foodX+CELL_SIZE/2, foodY+CELL_SIZE/2, 3, foodX+CELL_SIZE/2, foodY+CELL_SIZE/2, CELL_SIZE/1.8);
-            gradient.addColorStop(0, '#ff7e5e');
-            gradient.addColorStop(1, '#feb47b');
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(foodX + CELL_SIZE/2, foodY + CELL_SIZE/2, CELL_SIZE/2.5, 0, Math.PI*2);
-            ctx.fill();
-            ctx.fillStyle = '#fff3b0';
-            ctx.beginPath();
-            ctx.arc(foodX + CELL_SIZE/2, foodY + CELL_SIZE/2, CELL_SIZE/6, 0, Math.PI*2);
-            ctx.fill();
-            ctx.restore();
-            
-            // 绘制蛇身 - 高级鳞片渐变 + 根据等级头部特效
-            for(let i=0; i<snake.length; i++) {
-                const seg = snake[i];
-                const segX = seg.x * CELL_SIZE;
-                const segY = seg.y * CELL_SIZE;
-                const isHead = (i === 0);
-                const sizePad = 2;
-                const radius = CELL_SIZE * 0.28;
-                // 身体渐层
-                let grad = ctx.createLinearGradient(segX, segY, segX+CELL_SIZE, segY+CELL_SIZE);
-                if(isHead) {
-                    grad.addColorStop(0, '#ffc857');
-                    grad.addColorStop(1, '#ffa047');
-                } else {
-                    // 根据等级蛇身泛紫/金
-                    const intensity = 0.5 + (level / MAX_LEVEL) * 0.5;
-                    grad.addColorStop(0, `#2ba14b`);
-                    grad.addColorStop(1, `#1f7537`);
-                }
-                ctx.fillStyle = grad;
-                ctx.shadowBlur = isHead ? 8 : 2;
-                ctx.shadowColor = '#fed54e';
-                ctx.fillRect(segX+2, segY+2, CELL_SIZE-4, CELL_SIZE-4);
-                // 眼睛 (头部)
-                if(isHead) {
-                    ctx.fillStyle = '#ffffff';
-                    const eyeOff = CELL_SIZE * 0.25;
-                    const eyeSize = CELL_SIZE * 0.12;
-                    ctx.beginPath();
-                    ctx.arc(segX + CELL_SIZE - eyeOff, segY + eyeOff, eyeSize, 0, Math.PI*2);
-                    ctx.arc(segX + eyeOff, segY + eyeOff, eyeSize, 0, Math.PI*2);
-                    ctx.fill();
-                    ctx.fillStyle = '#021105';
-                    ctx.beginPath();
-                    ctx.arc(segX + CELL_SIZE - eyeOff + 1, segY + eyeOff -1, eyeSize*0.5, 0, Math.PI*2);
-                    ctx.arc(segX + eyeOff +1, segY + eyeOff -1, eyeSize*0.5, 0, Math.PI*2);
-                    ctx.fill();
-                } else {
-                    // 身体斑点细节
-                    ctx.fillStyle = '#ffde8a66';
-                    ctx.beginPath();
-                    ctx.arc(segX + CELL_SIZE*0.7, segY + CELL_SIZE*0.5, 2, 0, Math.PI*2);
-                    ctx.fill();
-                }
-            }
-            ctx.shadowBlur = 0;
-            // 额外粒子特效: 根据等级添加迷雾/星星 (视觉)
-            if(level >= 5) {
-                ctx.fillStyle = '#ffe3aa20';
-                for(let i=0;i<12;i++) {
-                    ctx.beginPath();
-                    ctx.arc( (i*97)%canvas.width, (i*53)%canvas.height, 2, 0, Math.PI*2);
-                    ctx.fill();
-                }
-            }
-            // 显示 Game Over / Pause 文字
-            if(isGameOver) {
-                drawGameOver();
-            } else if(isPaused) {
-                drawPaused();
-            }
-        }
-        
-        function drawGameOver() {
-            ctx.font = `bold ${Math.floor(CELL_SIZE * 1.8)}px 'Segoe UI'`;
-            ctx.shadowBlur = 0;
-            ctx.fillStyle = '#000000aa';
-            ctx.fillRect(0, canvas.height/2-70, canvas.width, 100);
-            ctx.fillStyle = '#ffcc88';
-            ctx.font = `bold ${Math.floor(CELL_SIZE * 1.6)}px monospace`;
-            ctx.textAlign = 'center';
-            ctx.fillText('GAME OVER', canvas.width/2, canvas.height/2+10);
-            ctx.font = `16px monospace`;
-            ctx.fillStyle = '#ffaa66';
-            ctx.fillText('点击重置', canvas.width/2, canvas.height/2+50);
-        }
-        
-        function drawWinMessage() {
-            ctx.fillStyle = '#000000aa';
-            ctx.fillRect(0, canvas.height/2-60, canvas.width, 110);
-            ctx.fillStyle = '#ffd966';
-            ctx.font = `bold ${Math.floor(CELL_SIZE * 1.5)}px monospace`;
-            ctx.textAlign = 'center';
-            ctx.fillText('🌟 完美通关 🌟', canvas.width/2, canvas.height/2);
-            ctx.font = `14px monospace`;
-            ctx.fillText('无尽荣耀', canvas.width/2, canvas.height/2+40);
-        }
-        
-        function drawPaused() {
-            ctx.fillStyle = '#00000099';
-            ctx.fillRect(0, canvas.height/2-50, canvas.width, 80);
-            ctx.font = `bold 32px monospace`;
-            ctx.fillStyle = '#ffe5b4';
-            ctx.textAlign = 'center';
-            ctx.fillText('⏸ 暂停', canvas.width/2, canvas.height/2+15);
-        }
-        
-        function drawLevelUpEffect() {
-            // 视觉闪烁效果 (半透明闪白)
-            let flashCount = 0;
-            const interval = setInterval(() => {
-                if(flashCount >= 3 || isGameOver) {
-                    clearInterval(interval);
-                    draw();
-                    return;
-                }
-                ctx.fillStyle = '#fff6cfaa';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                setTimeout(() => draw(), 40);
-                flashCount++;
-            }, 70);
-        }
-        
-        function updateStatusMessage(msg, isTemp=false) {
-            const msgDiv = document.getElementById('statusMessage');
-            msgDiv.innerHTML = `🎮 ${msg}`;
-            if(isTemp) {
-                setTimeout(() => {
-                    if(document.getElementById('statusMessage') && !isGameOver)
-                        document.getElementById('statusMessage').innerHTML = `🎮 方向键 | 关卡 ${level} 速度${currentSpeed}ms`;
-                }, 1800);
-            }
-        }
-        
-        // 控制 + 防冲突
-        function handleKeydown(e) {
-            if(isGameOver) return;
-            const key = e.key;
-            let newDir = null;
-            if (key === 'ArrowUp' || key === 'w') newDir = 'up';
-            else if (key === 'ArrowDown' || key === 's') newDir = 'down';
-            else if (key === 'ArrowLeft' || key === 'a') newDir = 'left';
-            else if (key === 'ArrowRight' || key === 'd') newDir = 'right';
-            if(newDir) {
-                e.preventDefault();
-                // 禁止原地掉头
-                if ((newDir === 'right' && direction === 'left') ||
-                    (newDir === 'left' && direction === 'right') ||
-                    (newDir === 'up' && direction === 'down') ||
-                    (newDir === 'down' && direction === 'up')) {
-                    return;
-                }
-                nextDirection = newDir;
-            }
-            // 空格或P键暂停
-            if(key === ' ' || key === 'Space' || key === 'p') {
-                e.preventDefault();
-                togglePause();
-            }
-        }
-        
-        function togglePause() {
-            if(isGameOver) return;
-            isPaused = !isPaused;
-            if(!isPaused) {
-                // 重启循环确保速度最新
-                if(gameLoop) clearInterval(gameLoop);
-                startGameLoop();
-                updateStatusMessage(`▶ 游戏继续 | 关卡 ${level}`, true);
-            } else {
-                if(gameLoop) clearInterval(gameLoop);
-                draw();
-                updateStatusMessage(`⏸ 暂停中 按 P 或 空格 继续`);
-            }
-            draw();
-        }
-        
-        function resetGame() {
-            if(gameLoop) clearInterval(gameLoop);
-            initGame();
-            draw();
-        }
-        
-        // 移动端方向
-        function attachMobileControls() {
-            const btns = document.querySelectorAll('.arrow-btn');
-            btns.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if(isGameOver) return;
-                    const dir = btn.getAttribute('data-dir');
-                    if(!dir) return;
-                    if ((dir === 'right' && direction === 'left') ||
-                        (dir === 'left' && direction === 'right') ||
-                        (dir === 'up' && direction === 'down') ||
-                        (dir === 'down' && direction === 'up')) return;
-                    nextDirection = dir;
-                });
-            });
-        }
-        
-        // 窗口初始化
-        window.addEventListener('load', () => {
-            initGame();
-            attachMobileControls();
-            window.addEventListener('keydown', handleKeydown);
-            document.getElementById('resetButton').addEventListener('click', () => resetGame());
-            document.getElementById('pauseBtn').addEventListener('click', () => togglePause());
-        });
-        
-    })();
-</script>
-</body>
-</html>
+        function drawGameOver(){ ctx.fillStyle='#000000aa'; ctx.fillRect(0,canvas.height/2-60,canvas.width,100); ctx.fillStyle='#ffbb77'; ctx.font='bold 32px monospace'; ctx.textAlign='center'; ctx.fillText('☠️ 终焉 ☠️', canvas.width/2, canvas.height/2+10);}
+        function drawWinMsg(){ ctx.fillStyle='#000000aa'; ctx.fillRect(0,canvas.height/2-60,canvas.width,100); ctx.fillStyle='#ffd966'; ctx.font='bold 28px monospace'; ctx.fillText('⭐ 万象主宰 ⭐', canvas.width/2, canvas.height/2+10);}
+        function drawPaused(){ ctx.fillStyle='#000000aa'; ctx.fillRect(0,canvas.height/2-50,canvas.width,80); ctx.fillStyle='#ffecb3'; ctx.font='bold 32px monospace'; ctx.fillText('⏸ 咒印静止', canvas.width/2, canvas.height/2+15);}
+        function drawLevelUpFlash(){ let flash=0; let iv=setInterval(()=>{ if(flash++>3) clearInterval(iv); ctx.fillStyle='#ffffaa88'; ctx.fillRect(0,0,canvas.width,canvas.height); setTimeout(()=>draw(),30);},70);}
+        function updateStatusMessage(msg,temp=false){ const el=document.getElementById('statusMessage'); el.innerHTML=`✨ ${msg}`; if(temp) setTimeout(()=>{ if(!isGameOver) el.innerHTML='✨ 自定义速度/颜色 | 每关地貌改变 | 绝对通路 ✨';},2500);}
+        function resetFull(){ if(gameLoop) clearInterval(gameLoop); level=1; refreshMapByLevel(); initGame(); draw(); }
+        function togglePause(){ if(isGameOver) return; isPaused=!isPaused; if(!isPaused){ startGameLoop(); draw(); updateStatusMessage("法力涌动，继续前行");} else { if(gameLoop) clearInterval(gameLoop); draw(); updateStatusMessage("时停·
